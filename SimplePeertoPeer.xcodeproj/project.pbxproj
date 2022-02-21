@@ -13,6 +13,7 @@
 		60A9E75727C3565D008C1795 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A9E75527C3565D008C1795 /* Main.storyboard */; };
 		60A9E75927C3565E008C1795 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A9E75827C3565E008C1795 /* Assets.xcassets */; };
 		60A9E75C27C3565E008C1795 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A9E75A27C3565E008C1795 /* LaunchScreen.storyboard */; };
+		60A9E76527C35692008C1795 /* PeerBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E76427C35692008C1795 /* PeerBrowser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		60A9E75827C3565E008C1795 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60A9E75B27C3565E008C1795 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60A9E75D27C3565E008C1795 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60A9E76427C35692008C1795 /* PeerBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBrowser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		60A9E74E27C3565D008C1795 /* SimplePeertoPeer */ = {
 			isa = PBXGroup;
 			children = (
+				60A9E76327C35685008C1795 /* Networking */,
 				60A9E74F27C3565D008C1795 /* AppDelegate.swift */,
 				60A9E75127C3565D008C1795 /* SceneDelegate.swift */,
 				60A9E75327C3565D008C1795 /* ViewController.swift */,
@@ -65,6 +68,14 @@
 				60A9E75D27C3565E008C1795 /* Info.plist */,
 			);
 			path = SimplePeertoPeer;
+			sourceTree = "<group>";
+		};
+		60A9E76327C35685008C1795 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				60A9E76427C35692008C1795 /* PeerBrowser.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60A9E76527C35692008C1795 /* PeerBrowser.swift in Sources */,
 				60A9E75427C3565D008C1795 /* ViewController.swift in Sources */,
 				60A9E75027C3565D008C1795 /* AppDelegate.swift in Sources */,
 				60A9E75227C3565D008C1795 /* SceneDelegate.swift in Sources */,
