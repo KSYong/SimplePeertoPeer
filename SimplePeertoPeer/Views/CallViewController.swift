@@ -97,6 +97,7 @@ class CallViewController: UIViewController {
     
     /// 녹음 중지하기
     private func stopRecording() {
+        // 기존에 탭했던 노드 제거하기
         mixerNode.removeTap(onBus: 0)
         
         audioEngine.stop()
