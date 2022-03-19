@@ -93,7 +93,14 @@ class CallViewController: UIViewController {
         try audioEngine.start()
         
         state = .recording
+    }
+    
+    /// 녹음 중지하기
+    private func stopRecording() {
+        mixerNode.removeTap(onBus: 0)
         
+        audioEngine.stop()
+        state = .stopped
     }
     
 }
