@@ -34,7 +34,9 @@ class PeerListener {
         startListening()
     }
     
-    // listening and advertising 시작
+    /**
+     listening and advertising 시작
+     */
     func startListening() {
         do {
             // listener 객체 생성
@@ -85,4 +87,14 @@ class PeerListener {
         }
     }
     
+    /**
+     유저가 name을 변경하면 advertise된 이름을 update하기
+     */
+    func resetName(_ name: String) {
+        self.name = name
+        if let listener = listener {
+            // advertise할 서비스 reset
+            listener.service = NWListener.Service(name: self.name, type: "_simpleP2P._udp")
+        }
+    }
 }

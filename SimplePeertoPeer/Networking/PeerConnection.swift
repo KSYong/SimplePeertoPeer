@@ -13,6 +13,7 @@ var sharedConnection: PeerConnection?
 protocol PeerConnectionDelegate: AnyObject {
     func connectionReady()
     func connectionFailed()
+//    func receivedAudio()
     func displayAdvertiseError(_ error: NWError)
 }
 
