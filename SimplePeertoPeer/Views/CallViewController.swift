@@ -78,6 +78,23 @@ class CallViewController: UIViewController {
         audioEngine.connect(mixerNode, to: audioEngine.mainMixerNode, format: mixerFormat)
     }
     
+    /// 녹음 실행하기
+    private func startRecording() throws {
+        let tapNode: AVAudioNode = mixerNode
+        let format = tapNode.outputFormat(forBus: 0)
+        
+        let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let file = try AVAudioFile(forWriting: documentURL.appendingPathComponent("recording.caf"), settings: format.settings)
+        
+        tapNode.installTap(onBus: 0, bufferSize: 4096, format: format, block: { (buffer, time) in
+            try? file.write(from: buffer)
+        })
+        
+        try audioEngine.start()
+        
+        state = .recording
+        
+    }
     
 }
 
