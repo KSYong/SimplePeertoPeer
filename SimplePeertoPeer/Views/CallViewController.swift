@@ -104,6 +104,17 @@ class CallViewController: UIViewController {
         state = .stopped
     }
     
+    
+    /// 통화 버튼이 클릭되었을 때 음성 녹음을 시작하는 함수
+    /// - Parameter sender: 클릭된 버튼 객체
+    @IBAction func touchDownCallButton(_ sender: UIButton) {
+        do{
+            try startRecording()
+        } catch (let error){
+            print("error while startRecording : \(error)")
+        }
+    }
+    
 }
 
 // TODO: - 델리게이트 함수 작성
