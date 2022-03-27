@@ -24,7 +24,7 @@ class FrequencyViewController: UITableViewController {
         
         if let browseResult = browseResult,
            case let NWEndpoint.service(name: name, type: _, domain: _, interface: _) = browseResult.endpoint {
-            title = "Join \(name)"
+            title = "Join Room \(name)"
         }
     }
     
@@ -37,6 +37,7 @@ class FrequencyViewController: UITableViewController {
         }
     }
     
+    // TODO: frequency가 없을 경우 예외처리 추가
     func joinPressed() {
         hasMadeCall = true
         if let frequency = frequencyField.text,
