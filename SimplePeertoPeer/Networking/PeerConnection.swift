@@ -63,9 +63,6 @@ class PeerConnection {
             case .ready:
                 print("\(connection) established")
                 
-                // 연결이 수립되면 오디오 통신 시작
-                self.receiveAudio()
-                
                 // delegate에게 연결이 ready 상태임을 알린다
                 if let delegate = self.delegate {
                     delegate.connectionReady()
@@ -81,9 +78,12 @@ class PeerConnection {
                     delegate.connectionFailed()
                 }
             default:
+                print("\(newState)")
                 break
             }
         }
+        
+        connection.start(queue: .main)
     }
     
     
