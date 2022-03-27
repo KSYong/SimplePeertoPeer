@@ -23,11 +23,11 @@ class CallViewController: UIViewController {
     
     @IBOutlet weak var callRecordButton: UIButton!
     
-    private var recordedFileURL = URL(fileURLWithPath: "input.caf", isDirectory: false, relativeTo: URL(fileURLWithPath: NSTemporaryDirectory()))
-    
     private var audioSession: AVAudioSession!
     private var audioEngine: AVAudioEngine!
     private var mixerNode: AVAudioMixerNode!
+    private var audioPlayer: AVAudioPlayerNode!
+    private var file: AVAudioFile!
     
     private var state: RecordingState = .stopped
     private var isTouched: Bool?
@@ -35,8 +35,9 @@ class CallViewController: UIViewController {
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupAudioSession()
         
+        setupAudioSession()
+        setupAudioEngine()
     }
     
     /// AVAudioSession 셋업
@@ -56,10 +57,12 @@ class CallViewController: UIViewController {
         // 오디오 엔진 및 커스텀 믹서 노드 생성
         audioEngine = AVAudioEngine()
         mixerNode = AVAudioMixerNode()
+        audioPlayer = AVAudioPlayerNode()
         
         mixerNode.volume = 0
         
         audioEngine.attach(mixerNode)
+        audioEngine.attach(audioPlayer)
         
         makeConnection()
         
@@ -76,23 +79,24 @@ class CallViewController: UIViewController {
         
         audioEngine.connect(inputNode, to: mixerNode, format: inputFormat)
         audioEngine.connect(mixerNode, to: audioEngine.mainMixerNode, format: mixerFormat)
+        audioEngine.connect(audioPlayer, to: audioEngine.outputNode, format: inputFormat)
     }
     
     /// 녹음 실행하기
     private func startRecording() throws {
         let tapNode: AVAudioNode = mixerNode
         let format = tapNode.outputFormat(forBus: 0)
-        
         let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let file = try AVAudioFile(forWriting: documentURL.appendingPathComponent("recording.caf"), settings: format.settings)
+        self.file = try AVAudioFile(forWriting: documentURL.appendingPathComponent("recording.caf"), settings: format.settings)
         
         tapNode.installTap(onBus: 0, bufferSize: 4096, format: format, block: { (buffer, time) in
-            try? file.write(from: buffer)
+            try? self.file.write(from: buffer)
         })
         
         try audioEngine.start()
         
         state = .recording
+        
     }
     
     /// 녹음 중지하기
@@ -113,6 +117,30 @@ class CallViewController: UIViewController {
         } catch (let error){
             print("error while startRecording : \(error)")
         }
+        
+    }
+    
+    /// 통화 버튼에서 손을 떼었을 때 녹음을 중단하는 함수
+    /// - Parameter sender: touch up 된 버튼 객체
+    @IBAction func touchUpCallButton(_ sender: UIButton) {
+       stopRecording()
+    }
+    
+    
+    /// 플레이 레코드 버튼을 클릭했을 때 녹음된 파일을 재생하는 함수
+    /// - Parameter sender: 클릭된 버튼 객체
+    @IBAction func touchDownPlayButton(_ sender: UIButton) {
+        audioPlayer.scheduleFile(file, at: nil)
+        
+        try! audioEngine.start()
+        audioPlayer.play()
+    }
+    
+    /// 플레이 레코드 버튼에서 손을 떼었을 때 녹음된 파일 재생을 끝내는 함수
+    /// - Parameter sender: 클릭된 버튼 객체
+    @IBAction func touchUpPlayButton(_ sender: UIButton) {
+        audioPlayer.stop()
+        audioEngine.stop()
     }
     
 }
